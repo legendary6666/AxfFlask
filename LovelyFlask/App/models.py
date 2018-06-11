@@ -1,36 +1,31 @@
 import hashlib
 
-from django.db import models
-
 # Create your models here.
-class Home(models.Model):
-    img = models.CharField(max_length=200)
-    name = models.CharField(max_length=32)
-    trackid = models.IntegerField(default=1)
+from LovelyFlask.App.ext import db
 
-    class Meta:
-        abstract = True
+
+class Home(db.Model):
+    __abstract__ = True
+    img = db.Column(db.String(200))
+    name = db.Column(db.String(16))
+    trackid = db.Column(db.String(64))
+
+
 
 
 class HomeWheel(Home):
 
-    class Meta:
-        db_table = 'axf_wheel'
+
+    _table__ = 'axf_wheel'
 
 class HomeNav(Home):
-
-    class Meta:
-        db_table = 'axf_nav'
+    _table__ = 'axf_nav'
 
 class HomeMustBuy(Home):
-
-    class Meta:
-        db_table = 'axf_mustbuy'
+    _table__ = 'axf_mustbuy'
 
 class HomeShop(Home):
-
-    class Meta:
-        db_table = 'axf_shop'
+    _table__ = 'axf_shop'
 
 """
 (trackid,name,img,categoryid,brandname,img1,childcid1,productid1,longname1,
@@ -39,57 +34,55 @@ img3,childcid3,productid3,longname3,price3,marketprice3)
 """
 
 class HomeMainShow(Home):
-    categoryid = models.IntegerField(default=1)
+    categoryid = db.Column(db.Integer,default=1)
 
-    brandname = models.CharField(max_length=32)
+    brandname = db.Column(db.String(32))
 
-    img1 = models.CharField(max_length=200)
+    img1 = db.Column(db.String(200))
 
-    childcid1 = models.IntegerField(default=1)
+    childcid1 = db.Column(db.Integer,default=1)
 
-    productid1 = models.IntegerField(default=1)
+    productid1 = db.Column(db.Integer,default=1)
 
-    longname1 = models.CharField(max_length=200)
+    longname1 = db.Column(db.String(200))
 
-    price1 = models.FloatField(default=0)
+    price1 =  db.Column(db.Float,default=0)
 
-    marketprice1 = models.FloatField(default=0)
+    marketprice1 = db.Column(db.Float,default=0)
 
-    img2 = models.CharField(max_length=200)
-    childcid2 = models.IntegerField(default=1)
+    img2 = db.Column(db.String(200))
+    childcid2 = db.Column(db.Integer,default=1)
 
-    productid2 = models.IntegerField(default=1)
+    productid2 = db.Column(db.Integer,default=1)
 
-    longname2 = models.CharField(max_length=200)
+    longname2 = db.Column(db.String(200))
 
-    price2 = models.FloatField(default=0)
+    price2 =  db.Column(db.Float,default=0)
 
-    marketprice2 = models.FloatField(default=0)
+    marketprice2 =  db.Column(db.Float,default=0)
 
-    img3 = models.CharField(max_length=200)
-    childcid3 = models.IntegerField(default=1)
+    img3 = db.Column(db.String(200))
+    childcid3 = db.Column(db.Integer,default=1)
 
-    productid3 = models.IntegerField(default=1)
+    productid3 = db.Column(db.Integer,default=1)
 
-    longname3 = models.CharField(max_length=200)
+    longname3 = db.Column(db.String(200))
 
-    price3 = models.FloatField(default=0)
+    price3 =  db.Column(db.Float,default=0)
 
-    marketprice3 = models.FloatField(default=0)
+    marketprice3 =  db.Column(db.Float,default=0)
 
-    class Meta:
-        db_table = 'axf_mainshow'
+    _table__ = 'axf_mainshow'
 
 # typeid,typename,childtypenames,typesort
 
-class FoodTypes(models.Model):
-    typeid = models.IntegerField(default=1)
-    typename = models.CharField(max_length=16)
-    childtypenames = models.CharField(max_length=200)
-    typesort = models.IntegerField(default=1)
+class FoodTypes(db.Model):
+    typeid = db.Column(db.Integer,default=1)
+    typename = db.Column(db.String(16))
+    childtypenames = db.Column(db.String(200))
+    typesort = db.Column(db.Integer,default=1)
 
-    class Meta:
-        db_table = 'axf_foodtypes'
+    _table_ = 'axf_foodtypes'
 
 """
 (productid,productimg,productname,productlongname,isxf,pmdesc,
@@ -100,36 +93,35 @@ dealerid,storenums,productnum)
 0,0,"50g",2.00,2.500000,103541,103543,"膨化食品","4858",200,4);
 """
 
-class Goods(models.Model):
-    productid = models.IntegerField(default=1)
-    productimg = models.CharField(max_length=200)
-    productname = models.CharField(max_length=128)
-    productlongname = models.CharField(max_length=200)
-    isxf = models.BooleanField(default=False)
-    pmdesc = models.BooleanField(default=False)
-    specifics = models.CharField(max_length=32)
-    price = models.FloatField(default=0)
-    marketprice = models.FloatField(default=1)
-    categoryid = models.IntegerField(default=1)
-    childcid = models.IntegerField(default=1)
-    childcidname = models.CharField(max_length=128)
-    dealerid = models.IntegerField(default=1)
-    storenums = models.IntegerField(default=1)
-    productnum = models.IntegerField(default=1)
+class Goods(db.Model):
+    productid = db.Column(db.Integer,default=1)
+    productimg = db.Column(db.String(200))
+    productname = db.Column(db.String(200))
+    productlongname = db.Column(db.String(200))
+    isxf = db.Column(db.Boolean,default=False)
+    pmdesc = db.Column(db.Boolean,default=False)
+    specifics = db.Column(db.String(200))
+    price = db.Column(db.Float,default=0)
+    marketprice = db.Column(db.Integer,default=1)
+    categoryid = db.Column(db.Integer,default=1)
+    childcid = db.Column(db.Integer,default=1)
+    childcidname = db.Column(db.String(128))
+    dealerid = db.Column(db.Integer,default=1)
+    storenums = db.Column(db.Integer,default=1)
+    productnum = db.Column(db.Integer,default=1)
 
-    class Meta:
-        db_table = 'axf_goods'
+    _table_ = 'axf_goods'
 
 
-class UserModel(models.Model):
-    u_name = models.CharField(max_length=16, unique=True)
+class UserModel(db.Model):
+    u_name = db.Column(db.String(200),unique=True)
     #
 
-    password = models.CharField(max_length=256)
-    u_email = models.CharField(max_length=32, unique=True)
-    u_icon = models.ImageField(upload_to='icons')
-    is_delete = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    password = db.Column(db.String(200))
+    u_email = db.Column(db.String(32),unique=True)
+    u_icon = db.ImageField(upload_to='icons')#******************************
+    is_delete = db.Column(db.Boolean,default=False)
+    is_active = db.Column(db.Boolean,default=False)
 
     def generate_hash(self, u_password):
         sha = hashlib.sha512()
@@ -143,42 +135,38 @@ class UserModel(models.Model):
     def check_password(self, u_password):
         return self.password == self.generate_hash(u_password)
 
-    class Meta:
-        db_table = 'axf_usermodel'
+    _table_ = 'axf_usermodel'
 
-class CartModel(models.Model):
-    c_user = models.ForeignKey(UserModel)
-    c_goods = models.ForeignKey(Goods)
-    c_goods_num = models.IntegerField(default=1)
-    c_goods_select = models.BooleanField(default=True)
+class CartModel(db.Model):
+    c_user = db.Column(db.String(32),db.ForeignKey(UserModel))
+    c_goods = db.Column(db.String(32),db.ForeignKey(Goods))
+    c_goods_num = db.Column(db.Integer,default=1)
+    c_goods_select = db.Column(db.Boolean,default=True)
 
-    class Meta:
-        db_table = 'axf_cartmodel'
+    _table_ = 'axf_cartmodel'
 
-class OrderModel(models.Model):
+class OrderModel(db.Model):
 
-    o_user = models.ForeignKey(UserModel)
+    o_user = db.Column(db.String(32),db.ForeignKey(UserModel))
 
     """
         0 已下单，未付款
         1 已下单，已付款，未发货
         2 已下单，已付款，已发货，未收货
     """
-    o_status = models.IntegerField(default=0)
+    o_status = db.Column(db.Integer,default=0)
 
-    o_time = models.DateTimeField(auto_now=True)
+    o_time = db.Column(db.DateTime)
 
-    class Meta:
-        db_table = 'axf_ordermodel'
+    _table_ = 'axf_ordermodel'
 
 
-class OrderGoods(models.Model):
+class OrderGoods(db.Model):
 
-    o_order = models.ForeignKey(OrderModel)
+    o_order = db.Column(db.Integer,db.ForeignKey(OrderModel))
 
-    o_goods = models.ForeignKey(Goods)
+    o_goods = db.Column(db.String,db.ForeignKey(Goods))
 
-    o_goods_num = models.IntegerField(default=1)
+    o_goods_num = db.Column(db.Integer,default=1)
 
-    class Meta:
-        db_table = 'axf_ordergoods'
+    _table_ = 'axf_ordergoods'
